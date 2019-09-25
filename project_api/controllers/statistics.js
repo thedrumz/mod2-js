@@ -1,22 +1,18 @@
 function approvedStudents(students) {
   const approved = students.filter(student => student.average >= 5);
 
-  return approved.map(
-    student => `${student.fullName} (${student.textualGrade})`
-  );
+  return approved;
 }
 
 function failedStudents(students) {
   const failed = students.filter(student => student.average < 5);
 
-  return failed.map(student => student.fullName);
+  return failed;
 }
 
 function bestStudents(students) {
-  const bestGrade = Math.max.apply(
-    Math,
-    students.map(student => student.average)
-  );
+  const averages = students.map(student => student.average);
+  const bestGrade = Math.max(...averages);
 
   return students.filter(student => student.average == bestGrade);
 }
@@ -27,18 +23,18 @@ function average(students) {
     students.length
   ).toFixed(2);
 
-  return `Class average note is ${average}`;
+  return average;
 }
 
 function studentsBySubject(students, subject) {
   subject = subject.trim().toUpperCase();
 
+  const studentByGrade = grade => {
+    grade.subject.toUpperCase() === subject;
+  };
+
   return students.filter(student => {
-    if (
-      student.grades.filter(grade => {
-        return grade.subject.toUpperCase() === subject;
-      }).length > 0
-    ) {
+    if (student.grades.filter(studentByGrade).length > 0) {
       return student;
     }
   });

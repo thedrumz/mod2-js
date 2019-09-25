@@ -3,6 +3,14 @@ const router = express.Router();
 const statistics = require("./controllers/statistics");
 const students = require("./controllers/students");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+
+// Swagger
+router.use("/api-docs", swaggerUi.serve);
+router.get("/api-docs", swaggerUi.setup(swaggerDocument));
+
+// Students routes
 router.route(["/", "/students"]).get((req, res) => {
   const list = students.getAllStudents(req.query);
 
@@ -39,6 +47,7 @@ router.route(["/students"]).get((req, res) => {
   res.send(statistics.average(list).toString());
 });
 
+// Single student routes
 router.route(["/student/:dni"]).get((req, res) => {
   const dni = req.params.dni.trim().toUpperCase();
   const student = students.getSingleStudentByDni(dni, req.query);

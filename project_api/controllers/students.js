@@ -2,6 +2,8 @@ const studentsListA = require("../resources/students_A.js");
 const studentsListB = require("../resources/students_B.js");
 const Student = require("../models/Student");
 
+const DEFAULT_CLASSROM = "A";
+
 const getAllStudents = queryParams => {
   let studentsList = selectStudentsList(queryParams.classroom);
 
@@ -12,14 +14,14 @@ const getAllStudents = queryParams => {
     );
   }
 
-  return studentsList.map(student => {
-    return new Student(student.name, student.dni, student.grades);
-  });
+  return studentsList.map(
+    student => new Student(student.name, student.dni, student.grades)
+  );
 };
 
 const selectStudentsList = studentsClass => {
   if (studentsClass === undefined) {
-    studentsClass = "A";
+    studentsClass = DEFAULT_CLASSROM;
   }
 
   studentsClass = studentsClass.toUpperCase();

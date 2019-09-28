@@ -1,0 +1,29 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API Project",
+    "version": "1.0.0"
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/api": {
+      "get": {
+        "operationId": "getAllStudents",
+        "summary": "All students",
+        "description": "List of all students.\n",
+        "produces": ["application/json"],
+        "responses": { "200": { "description": "200 response" } }
+      }
+    },
+    "/api/students/approved": {
+      "get": {
+        "operationId": "getApprovedStudents",
+        "summary": "Approved students",
+        "description": "List of approved students.\n",
+        "produces": ["application/json"],
+        "responses": { "200": { "description": "200 response" } }
+      }
+    }
+  }
+}

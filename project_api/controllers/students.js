@@ -4,11 +4,19 @@ const Student = require("../models/Student");
 
 const DEFAULT_CLASSROM = "A";
 
+function studentsBySubject(students, subject) {
+  subject = subject.trim().toUpperCase();
+
+  const studentByGrade = grade => grade.subject.toUpperCase() === subject;
+
+  return students.filter(student => student.grades.filter(studentByGrade).length > 0);
+}
+
 const getAllStudents = queryParams => {
   let studentsList = selectStudentsList(queryParams.classroom);
 
   if ("subject" in queryParams) {
-    studentsList = statistics.studentsBySubject(
+    studentsList = studentsBySubject(
       studentsList,
       queryParams.subject
     );
@@ -34,9 +42,8 @@ const selectStudentsList = studentsClass => {
 };
 
 const getSingleStudentByDni = (dni, queryParams) => {
-  const students = getAllStudents(queryParams);
-
-  const [student] = students.filter(student => student.dni === dni);
+  const [student] = getAllStudents(queryParams)
+    .filter(student => student.dni === dni);
 
   return student;
 };

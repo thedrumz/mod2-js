@@ -1,6 +1,6 @@
 const DECIMALS = 2;
 
-module.exports = class Student {
+class Student {
   constructor(fullName, dni, grades = []) {
     this._grades = [];
 
@@ -15,23 +15,26 @@ module.exports = class Student {
     }
 
     return (
-      this._grades.map(grade => grade.grade).reduce((a, b) => a + b) /
-      this._grades.length
+      this._grades
+        .map(grade => grade.grade)
+        .reduce((a, b) => a + b) / this._grades.length
     ).toFixed(DECIMALS);
   }
 
   get textualGrade() {
-    const average = this.average;
-
-    if (average >= 5 && average < 7) {
+    if (this.average >= 5 && this.average < 7) {
       return "APROBADO";
-    } else if (average >= 7 && average < 9) {
+    } else if (this.average >= 7 && this.average < 9) {
       return "NOTABLE";
-    } else if (average >= 9) {
+    } else if (this.average >= 9) {
       return "SOBRESALIENTE";
     } else {
       return "SUSPENSO";
     }
+  }
+
+  get name() {
+    return this._name;
   }
 
   get fullName() {
@@ -115,3 +118,5 @@ module.exports = class Student {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 };
+
+module.exports = Student;
